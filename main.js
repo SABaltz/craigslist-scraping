@@ -7,7 +7,7 @@ const filePath = 'pids.txt';
 
 async function scrapeData() {
     try {
-        const { data } = await axios.get(url);
+        const {data} = await axios.get(url);
         const $ = cheerio.load(data);
         const listItems = $("ol li");
 
@@ -36,4 +36,4 @@ async function scrapeData() {
     }
 }
 
-scrapeData();
+setInterval(() => scrapeData(), 3600000);

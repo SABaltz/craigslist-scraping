@@ -1,6 +1,7 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
 const fs = require('fs');
+const sendEmail = require("./email");
 const url = 'https://anchorage.craigslist.org/search/roo#search=1';
 const filePath = 'pids.txt';
 
@@ -22,7 +23,7 @@ async function scrapeData() {
 
                 if (postId && !existingPids.has(postId)) {
                     newPids.push(postId);
-                    console.log(href);
+                    sendEmail(href);
                 }
             }
         });

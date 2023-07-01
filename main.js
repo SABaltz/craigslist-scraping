@@ -1,5 +1,5 @@
 const cheerio = require("cheerio");
-const pretty = require("pretty");
+// const pretty = require("pretty");
 const axios = require("axios");
 
 const url = 'https://anchorage.craigslist.org/search/roo#search=1'
@@ -11,9 +11,18 @@ async function scrapeData() {
 
         const listItems = $("ol li");
 
+        let count = 0
+
         listItems.each((index, el) => {
-            console.log($(el).text())
+            if (index !== 0){
+                let href = $(el).children('a').attr('href')
+                let post = String(href).match(/(\d+)\.html$/)[1]
+                console.log(post)
+                count ++
+            }
         });
+
+        console.log(count)
 
     } catch (err) {
         console.error(err);
@@ -21,3 +30,4 @@ async function scrapeData() {
 }
 // Invoke the above function
 scrapeData();
+

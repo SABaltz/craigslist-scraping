@@ -17,11 +17,14 @@ async function scrapeData() {
         const lines = fileContent.split('\n');
 
         let emptyFile
-        if (lines.length === 1) {
-            emptyFile = true
-        } else {
-            emptyFile = false
-        }
+        emptyFile = lines.length === 1;
+
+        let lineArray = []
+        const fileData = fs.readFileSync('pids.txt', 'UTF-8')
+        const fileLines = fileData.split(/\r?\n/)
+        fileLines.forEach(line => {
+            lineArray.push(line)
+        })
 
 
         listItems.each((index, el) => {
@@ -36,6 +39,15 @@ async function scrapeData() {
                             console.error(err);
                         }
                     });
+                } else {
+                    if (!lineArray.includes(post)){
+                        console.log(href)
+                        fs.appendFile('pids.txt', post + '\n', (err) => {
+                            if (err) {
+                                console.error(err);
+                            }
+                        });
+                    }
                 }
 
 

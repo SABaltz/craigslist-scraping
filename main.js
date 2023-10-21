@@ -20,10 +20,10 @@ async function scrapeData() {
             if (index !== 0) {
                 const href = $(el).children('a').attr('href');
                 const postId = href.match(/(\d+)\.html$/)?.[1];
-                const price = $(el).find('div.price').text();
-                console.log(price)
-                if (postId && !existingPids.has(postId)) {
+                const price = $(el).find('div.price').text().replace('$', '');
+                if (postId && !existingPids.has(postId) && Number(price) <= 750) {
                     newPids.push(postId);
+                    sendEmail(href, price)
                 }
             }
         });
@@ -36,5 +36,4 @@ async function scrapeData() {
     }
 }
 
-// setInterval(() => scrapeData(), 3600000);
-scrapeData()
+setInterval(() => scrapeData(), 3600000);

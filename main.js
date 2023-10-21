@@ -20,10 +20,10 @@ async function scrapeData() {
             if (index !== 0) {
                 const href = $(el).children('a').attr('href');
                 const postId = href.match(/(\d+)\.html$/)?.[1];
-
+                const price = $(el).find('div.price').text();
+                console.log(price)
                 if (postId && !existingPids.has(postId)) {
                     newPids.push(postId);
-                    sendEmail(href);
                 }
             }
         });
@@ -36,4 +36,5 @@ async function scrapeData() {
     }
 }
 
-setInterval(() => scrapeData(), 3600000);
+// setInterval(() => scrapeData(), 3600000);
+scrapeData()
